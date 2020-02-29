@@ -11,6 +11,9 @@ class DataF():
     def get_row(self, row):
         return str(self.dataframe.iloc[row, 4])
 
+    def get_index_null(self):
+        return self.dataframe[self.dataframe['tag'].isnull()].index.tolist()
+
     def __str__(self):
         print(self.dataframe.head())
 

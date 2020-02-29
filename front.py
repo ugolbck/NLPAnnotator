@@ -4,25 +4,43 @@ import pandas as pd
 
 from back import DataF
 
-class Application(tk.Frame):
-    def __init__(self, master):
-        super().__init__(master)
-        self.master = master
-        master.title('Part Manager')
-        # Width height
-        master.geometry("700x350")
+class Application(tk.Tk):
+    def __init__(self, *args, **kwargs):
+        tk.Tk.__init__(self, *args, **kwargs)
 
-    def load_frame(self, frame):
-        frame_field = tk.Label(self, text=frame.__str__())
-        frame_field.grid(row=0, column=0)
+        window = tk.Frame(self)
+        window.pack(side='top', fill='both', expand=True)
 
-app = Application(master=tk.Tk())
+        window.grid_rowconfigure(0, weight=1)
+        window.grid_columnconfigure(0, weight=1)
 
-d = {'col1': [1, 2], 'col2': [3, 4]}
-df = pd.DataFrame(data=d)
+        self.frames = {}
 
-app.load_frame(DataF(df))
+        frame = StartPage(window, self)
+
+        self.frames[StartPage] = frame
+
+        frame.grid(row=0, column=0, sticky="nsew")
+
+        self.show_frame(StartPage)
+
+    def show_frame(self, win):
+        frame = self.frames[win]
+        frame.tkraise()
+
+class StartPage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        self.dataframe = DataF('1460_amazon_reviews.csv')
+
+        label = tk.Label(self, text=self.dataframe.get_row(0), font=("Verdana", 12))
+        label.pack(pady=10, padx=10)
 
 
-
+app = Application()
 app.mainloop()
+
+    
+
+

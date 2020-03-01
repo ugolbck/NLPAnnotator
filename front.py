@@ -40,7 +40,6 @@ class StartPage(tk.Frame):
         cat = tk.StringVar()
         category = ttk.Entry(self, textvariable=cat)
         category.grid(column=0, row=1, sticky=tk.W)
-        print(category.get())
 
         label = ttk.Label(self, text=self.dataframe.get_row(0), font=("Verdana", 12))
         label.grid(column=0, row=0, sticky=tk.N)
